@@ -389,7 +389,7 @@ namespace w2xc
 
 		if (r != CUDA_SUCCESS)
 		{
-			printf("fail: alloc bias %d.", (int)r);
+			fprintf(stderr, "fail: alloc bias %d.", (int)r);
 			exit(1);
 		}
 
@@ -662,7 +662,7 @@ namespace w2xc
 		r = cuStreamSynchronize(dev->stream);
 		if (r != CUDA_SUCCESS)
 		{
-			printf("fail stream sync: %d\n", r);
+			fprintf(stderr, "fail stream sync: %d\n", r);
 			exit(1);
 		}
 

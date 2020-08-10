@@ -690,9 +690,9 @@ namespace w2xc
 
 			double t2 = getsec();
 
-			printf("(w=%d,h=%d) (ip=%d,op=%d) %f %f %f[gflops]\n", size.width, size.height, nInputPlanes, nOutputPlanes, t1-t0, t2-t1, ops/(1000*1000*1000));
-			printf("ver2 : %f [Gflops]\n", (ops/(1000.0*1000.0*1000.0)) / (t2-t1));
-			printf("orig : %f [Gflops]\n", (ops/(1000.0*1000.0*1000.0)) / (t1-t0));
+			fprintf(stderr, "(w=%d,h=%d) (ip=%d,op=%d) %f %f %f[gflops]\n", size.width, size.height, nInputPlanes, nOutputPlanes, t1-t0, t2-t1, ops/(1000*1000*1000));
+			fprintf(stderr, "ver2 : %f [Gflops]\n", (ops/(1000.0*1000.0*1000.0)) / (t2-t1));
+			fprintf(stderr, "orig : %f [Gflops]\n", (ops/(1000.0*1000.0*1000.0)) / (t1-t0));
 			int error_count = 0;
 
 			float *packed_output_cv = (float*)packed_output_cv_buf->get_read_ptr_host(env, out_size);
@@ -716,7 +716,7 @@ namespace w2xc
 					int xpos = pixpos % size.width;
 					int ypos = pixpos / size.width;
 
-					printf("d=%.20f %.20f %.20f @ (%d,%d,%d,%d) \n",r, v0, v1, xpos, ypos, plane, i);
+					fprintf(stderr, "d=%.20f %.20f %.20f @ (%d,%d,%d,%d) \n",r, v0, v1, xpos, ypos, plane, i);
 					error_count++;
 
 					if (error_count >= 256)

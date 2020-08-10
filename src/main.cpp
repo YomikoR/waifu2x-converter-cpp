@@ -207,7 +207,7 @@ static void dump_procs()
 			}
 		}
 
-		printf("%4d: %-47s(%-10s): num_core=%d\n", i, p->dev_name, type, p->num_core);
+		fprintf(stderr, "%4d: %-47s(%-10s): num_core=%d\n", i, p->dev_name, type, p->num_core);
 	}
 }
 
@@ -875,7 +875,7 @@ int main(int argc, char** argv)
 	}
 	if (validate_format_extension(cmdOutputFormat.getValue()) == false)
 	{
-		printf("Unsupported output extension: %s\nUse option --list-supported-formats to see a list of supported formats", cmdOutputFormat.getValue().c_str());
+		fprintf(stderr, "Unsupported output extension: %s\nUse option --list-supported-formats to see a list of supported formats", cmdOutputFormat.getValue().c_str());
 		std::exit(-1);
 	}
 	
@@ -992,17 +992,17 @@ int main(int argc, char** argv)
 		{
 			case W2XCONV_PROC_HOST:
 			{
-				printf("CPU: %s\n", converter->target_processor->dev_name);
+				fprintf(stderr, "CPU: %s\n", converter->target_processor->dev_name);
 				break;
 			}
 			case W2XCONV_PROC_CUDA:
 			{
-				printf("CUDA: %s\n", converter->target_processor->dev_name);
+				fprintf(stderr, "CUDA: %s\n", converter->target_processor->dev_name);
 				break;
 			}
 			case W2XCONV_PROC_OPENCL:
 			{
-				printf("OpenCL: %s\n", converter->target_processor->dev_name);
+				fprintf(stderr, "OpenCL: %s\n", converter->target_processor->dev_name);
 				break;
 			}
 		}
@@ -1106,7 +1106,7 @@ int main(int argc, char** argv)
 				}
 			}
 			
-			printf("Processing file [%d/%d] \"%s\":%s",
+			fprintf(stderr, "Processing file [%d/%d] \"%s\":%s",
 				numFilesProcessed,
 				files_count,
 				file_path.c_str(),
@@ -1151,34 +1151,34 @@ int main(int argc, char** argv)
 			int eta_m = (int) (eta - eta_D * 24 * 60 * 60 - eta_h * 60 * 60) / 60;
 			double eta_s = (double) (eta - eta_D * 24 * 60 * 60 - eta_h * 60 * 60 - eta_m * 60);
 
-			printf("Done, took: ");
+			fprintf(stderr, "Done, took: ");
 			if (el_D)
 			{
-				printf("%dD ", el_D);
+				fprintf(stderr, "%dD ", el_D);
 			}
 			if (el_h)
 			{
-				printf("%dh ", el_h);
+				fprintf(stderr, "%dh ", el_h);
 			}
 			if (el_m)
 			{
-				printf("%dm ", el_m);
+				fprintf(stderr, "%dm ", el_m);
 			}
-			printf("%.3lfs total, ", el_s);
-			printf("ETA: ");
+			fprintf(stderr, "%.3lfs total, ", el_s);
+			fprintf(stderr, "ETA: ");
 			if (eta_D)
 			{
-				printf("%dD ", eta_D);
+				fprintf(stderr, "%dD ", eta_D);
 			}
 			if (eta_h)
 			{
-				printf("%dh ", eta_h);
+				fprintf(stderr, "%dh ", eta_h);
 			}
 			if (eta_m)
 			{
-				printf("%dm ", eta_m);
+				fprintf(stderr, "%dm ", eta_m);
 			}
-			printf("%.3lfs, file: %.3fs avg: %.3fs\n", eta_s, time_file, timeAvg);
+			fprintf(stderr, "%.3lfs, file: %.3fs avg: %.3fs\n", eta_s, time_file, timeAvg);
 		}
 	}
 
@@ -1189,7 +1189,7 @@ int main(int argc, char** argv)
 		double gflops_proc = (converter->flops.flop / (1000.0*1000.0*1000.0)) / converter->flops.filter_sec ? converter->flops.filter_sec : 1;
 		double gflops_all = (converter->flops.flop / (1000.0*1000.0*1000.0)) / (time_end - time_start);
 
-		printf("Finished processing %d files%s%.3fs total, filter: %.3fs; %d files skipped, %d files errored. [GFLOPS: %.2f, GFLOPS-Filter: %.2f]\n",
+		fprintf(stderr, "Finished processing %d files%s%.3fs total, filter: %.3fs; %d files skipped, %d files errored. [GFLOPS: %.2f, GFLOPS-Filter: %.2f]\n",
 			numFilesProcessed,
 			(log_level >=2 ? "\nTook: " : ", took: "),
 			(time_end - time_start),

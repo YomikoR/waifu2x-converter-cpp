@@ -17,7 +17,7 @@ main(int argc, char **argv)
     if (argc>=2 && strcmp(argv[1],"-l") == 0) {
         size_t i;
         for (i=0; i<num_proc; i++) {
-            printf("type=%2d, subtype=%2d, name=%s\n",
+            fprintf(stderr, "type=%2d, subtype=%2d, name=%s\n",
                    proc_list[i].type,
                    proc_list[i].sub_type,
                    proc_list[i].dev_name);

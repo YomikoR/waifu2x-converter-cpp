@@ -125,7 +125,7 @@ namespace w2xc
 
 			if (log_level >= 4)
 			{
-				printf("Iteration #%d(%3d->%3d)...", (index + 1), nInputPlanes, nOutputPlanes);
+				fprintf(stderr, "Iteration #%d(%3d->%3d)...", (index + 1), nInputPlanes, nOutputPlanes);
 			}
 			
 			double t0 = getsec();
@@ -144,7 +144,7 @@ namespace w2xc
 				double bytes = (double) filterSize.width * filterSize.height * sizeof(float) * (nOutputPlanes + nInputPlanes);
 				double gigabytesPerSec = (bytes/(1000.0*1000.0*1000.0)) / (t1-t0);
 
-				printf("(%.5f[s], %7.2f[GFLOPS], %8.3f[GB/s])\n", t1-t0, gflops, gigabytesPerSec);
+				fprintf(stderr, "(%.5f[s], %7.2f[GFLOPS], %8.3f[GB/s])\n", t1-t0, gflops, gigabytesPerSec);
 			}
 			
 			ops_sum += ops;
@@ -195,7 +195,7 @@ namespace w2xc
 		if (log_level >= 3)
 		{
 			double gflops = ops_sum/(1000.0*1000.0*1000.0) / (t01-t00);
-			printf("total : %.3f[sec], %07.2f[GFLOPS]\n", t01-t00, gflops);
+			fprintf(stderr, "total : %.3f[sec], %07.2f[GFLOPS]\n", t01-t00, gflops);
 		}
 
 		return true;
@@ -470,7 +470,7 @@ namespace w2xc
 
 				if (log_level >= 3)
 				{
-					printf("Processing block, column (%02d/%02d), row (%02d/%02d) ...\n", (c+1), splitColumns, (r+1), splitRows);
+					fprintf(stderr, "Processing block, column (%02d/%02d), row (%02d/%02d) ...\n", (c+1), splitColumns, (r+1), splitRows);
 				}
 
 				int elemSize = 0;

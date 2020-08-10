@@ -866,7 +866,7 @@ static void apply_scale
 	{
 		if (conv->log_level >= 3)
 		{
-			printf("2x Scaling:\n");
+			fprintf(stderr, "2x Scaling:\n");
 		}
 		cv::Size imageSize = image.size();
 		imageSize.width *= 2;
@@ -1758,7 +1758,7 @@ void merge_slices(cv::Mat *image, std::vector<cv::Mat> &pieces, const int max_sc
 		
 		cv::imwrite(name, testout);
 		
-		printf("imwriting merged image - vertical\n"); 
+		fprintf(stderr, "imwriting merged image - vertical\n"); 
 		sprintf(name, "[test] merge_step%d_block1.webp", ld);
 		
 		test=merged[1].clone(), testout = cv::Mat(merged[1].size(), CV_MAKETYPE(src_depth,3));
@@ -1775,7 +1775,7 @@ void merge_slices(cv::Mat *image, std::vector<cv::Mat> &pieces, const int max_sc
 		pieces.push_back(merged[2].clone());
 		
 		/*
-		printf("imwriting merged image\n"); 
+		fprintf(stderr, "imwriting merged image\n"); 
 		sprintf(name, "[test] merge_step%d_merged.webp", ld);
 		
 		test=merged[2].clone(), testout = cv::Mat(merged[2].size(), CV_MAKETYPE(src_depth,3));
@@ -1885,7 +1885,7 @@ void w2xconv_convert_mat
 		
 		if (conv->log_level >= 2)
 		{
-			printf("\nStep %02d/%02d: Denoising\n", w2x_current_step++, ++w2x_total_steps);
+			fprintf(stderr, "\nStep %02d/%02d: Denoising\n", w2x_current_step++, ++w2x_total_steps);
 		}
 			
 		slice_into_pieces(pieces, image, 1);
@@ -1894,7 +1894,7 @@ void w2xconv_convert_mat
 		{
 			if (conv->log_level >= 2)
 			{
-				printf("Proccessing [%d/%zu] slices\n", i+1, pieces.size());
+				fprintf(stderr, "Proccessing [%d/%zu] slices\n", i+1, pieces.size());
 			}
 			
 			if(conv->tta_mode)
@@ -1906,7 +1906,7 @@ void w2xconv_convert_mat
 					
 					if (conv->log_level >= 2)
 					{
-						printf("Working on TTA mode... step%d/8\n", ti+1);
+						fprintf(stderr, "Working on TTA mode... step%d/8\n", ti+1);
 					}
 					
 					for(int tj=0; tj < ti%4; tj++)
@@ -1953,7 +1953,7 @@ void w2xconv_convert_mat
 		
 		if (pieces.size() > 1 && conv->log_level >= 2)
 		{
-			printf("Merging slices back to one image... in queue: %zu slices\n", pieces.size());
+			fprintf(stderr, "Merging slices back to one image... in queue: %zu slices\n", pieces.size());
 		}
 		merge_slices(&image, pieces, 1);
 	}
@@ -1974,7 +1974,7 @@ void w2xconv_convert_mat
 			
 			if (conv->log_level >= 2)
 			{
-				printf("\nStep %02d/%02d: 2x Scaling\n", w2x_current_step++, w2x_total_steps);
+				fprintf(stderr, "\nStep %02d/%02d: 2x Scaling\n", w2x_current_step++, w2x_total_steps);
 			}
 			
 			slice_into_pieces(pieces, image);
@@ -1983,7 +1983,7 @@ void w2xconv_convert_mat
 			{
 				if (conv->log_level >= 2)
 				{
-					printf("Proccessing [%d/%zu] slices\n", i+1, pieces.size());
+					fprintf(stderr, "Proccessing [%d/%zu] slices\n", i+1, pieces.size());
 				}
 				
 				if(conv->tta_mode)
@@ -1995,7 +1995,7 @@ void w2xconv_convert_mat
 						
 						if (conv->log_level >= 2)
 						{
-							printf("Working on TTA mode... step%d/8\n", ti+1);
+							fprintf(stderr, "Working on TTA mode... step%d/8\n", ti+1);
 						}
 						
 						for(int tj=0; tj < ti%4; tj++)
@@ -2050,7 +2050,7 @@ void w2xconv_convert_mat
 
 			if (pieces.size() > 1 && conv->log_level >= 2)
 			{
-				printf("Merging slices back to one image... in queue: %zu slices\n", pieces.size());
+				fprintf(stderr, "Merging slices back to one image... in queue: %zu slices\n", pieces.size());
 			}
 			merge_slices(&image, pieces);
 		}
@@ -2313,14 +2313,14 @@ int w2xconv_convert_file
 	
 	if (conv->log_level >= 2 && scale > 1.0 )
 	{
-		printf("Scaling image from %dx%d to %dx%d\n", image_src.cols, image_src.rows, (int) (image_src.cols * scale), (int) (image_src.rows * scale));
+		fprintf(stderr, "Scaling image from %dx%d to %dx%d\n", image_src.cols, image_src.rows, (int) (image_src.cols * scale), (int) (image_src.rows * scale));
 	}
 	
 	w2xconv_convert_mat(conv, &image_dst, &image_src, denoise_level, scale, blockSize, background, has_alpha, dst_alpha);
 	
 	if (conv->log_level >= 2)
 	{
-		printf("Writing image to file...\n\n");
+		fprintf(stderr, "Writing image to file...\n\n");
 	}
 	
 	std::vector<int> vec_imwrite_params;
@@ -2369,7 +2369,7 @@ static void convert_mat
 	{
 		if (conv->log_level >= 2)
 		{
-			printf("Step %02d/%02d: Denoising\n", w2x_current_step++, ++w2x_total_steps);
+			fprintf(stderr, "Step %02d/%02d: Denoising\n", w2x_current_step++, ++w2x_total_steps);
 		}
 		apply_denoise(conv, image, denoise_level, blockSize, fmt);
 	}

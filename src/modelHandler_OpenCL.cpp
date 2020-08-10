@@ -129,7 +129,7 @@ namespace w2xc
 #endif
 		if (!handle)
 		{
-			printf("No openCL handle found, is libOpenCL installed?\n");
+			fprintf(stderr, "No openCL handle found, is libOpenCL installed?\n");
 			return;
 		}
 
@@ -186,7 +186,7 @@ namespace w2xc
 			std::vector<char> name(sz);
 			clGetPlatformInfo(plts[i], CL_PLATFORM_NAME, sz, &name[0], &sz);
 			
-			printf("Platform: %s\n",&name[0]);
+			fprintf(stderr, "Platform: %s\n",&name[0]);
 
 			bool is_amd = strstr(&name[0], "AMD") != NULL;
 			bool is_apple = strstr(&name[0], "Apple") != NULL;
@@ -389,7 +389,7 @@ namespace w2xc
 				break;
 			}
 			if (sysctl(mib, mib_len, NULL, &path_len, NULL, 0)) {
-				printf("Error getting path to executable: %s\n", strerror(errno));
+				fprintf(stderr, "Error getting path to executable: %s\n", strerror(errno));
 				exit(EXIT_FAILURE);
 			}
 			self_path = (char*)realloc(self_path, path_len);
@@ -594,28 +594,28 @@ namespace w2xc
 								}
 								catch (fs::filesystem_error& e)
 								{
-									printf("Error creating directory: %s\n", e.what());
+									fprintf(stderr, "Error creating directory: %s\n", e.what());
 									exit(EXIT_FAILURE);
 								}
 							}
 
 							bin_path = user_folder + "/" + dev_nameStr + ".bin";
 							fp = fopen(bin_path.c_str(), "wb");
-							printf("Writing OpenCL-Binary to: %s\n",bin_path.c_str());
+							fprintf(stderr, "Writing OpenCL-Binary to: %s\n",bin_path.c_str());
 						}
 						else
 						{
-							printf("Error opening file %s: [%d] %s\n",bin_path.c_str(),errno,strerror(errno));
+							fprintf(stderr, "Error opening file %s: [%d] %s\n",bin_path.c_str(),errno,strerror(errno));
 							exit (EXIT_FAILURE);
 						}
 #else
-						printf("Error opening file %s: [%d] %s\n",bin_path.c_str(),errno,strerror(errno));
+						fprintf(stderr, "Error opening file %s: [%d] %s\n",bin_path.c_str(),errno,strerror(errno));
 						exit (EXIT_FAILURE);
 #endif
 				}
 				else
 				{
-					printf("Writing OpenCL-Binary to: %s\n",bin_path.c_str());
+					fprintf(stderr, "Writing OpenCL-Binary to: %s\n",bin_path.c_str());
 				}
 			}
 
@@ -908,7 +908,7 @@ namespace w2xc
 
 		if (err != CL_SUCCESS)
 		{
-			printf("enqueue ndrange error : %d\n", err);
+			fprintf(stderr, "enqueue ndrange error : %d\n", err);
 			exit(1);
 		}
 
@@ -916,13 +916,13 @@ namespace w2xc
 
 		if (err != CL_SUCCESS)
 		{
-			printf("wait ndrange error : %d\n", err);
+			fprintf(stderr, "wait ndrange error : %d\n", err);
 			exit(1);
 		}
 
 		if (err != CL_SUCCESS)
 		{
-			printf("read buffer error : %d\n", err);
+			fprintf(stderr, "read buffer error : %d\n", err);
 			exit(1);
 		}
 
